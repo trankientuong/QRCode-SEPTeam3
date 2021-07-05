@@ -1,0 +1,112 @@
+﻿@using WebApplication2.Models
+@using Microsoft.AspNet.Identity
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+<style>
+
+    #container {
+        text-align: center;
+        margin: 0;
+    }
+
+    #qr-canvas {
+        margin: auto;
+        width: calc(100% - 20px);
+        max-width: 400px;
+    }
+
+
+    #qr-result {
+        font-size: 1.2em;
+        margin: 20px auto;
+        padding: 20px;
+        max-width: 700px;
+        background-color: white;
+    }
+</style>
+
+
+<div id="container">
+    <button id="btnCam" type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-sm">Mở</button>
+    <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Title</h5>
+                </div>
+                <video id="video" autoplay></video>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <canvas hidden="" id="qr-canvas"></canvas>
+
+    <div id="qr-result" hidden="">
+        <b>Data:</b> <span id="outputData"></span>
+    </div>
+</div>
+
+<script type="text/javascript">
+    const video = document.getElementById('video');
+    const btnCam = document.getElementById('btnCam');
+    const canvasElement = document.getElementById("qr-canvas");
+    const canvas = canvasElement.getContext("2d");
+   
+    const qrResult = document.getElementById("qr-result");
+    const outputData = document.getElementById("outputData");
+
+    let scanning = false;
+
+    qrcode.callback = function (res) {
+        if (res) {
+            outputData.innerText = res;
+            var url = '@Url.Action("ReadQRCode","ATTENDANCE",new {qrcodeText = "qrcodeText",studentId = User.Identity.GetUserId() })'
+            url.replace("qrcodeText", res);
+            const parseResult = new DOMParser().parseFromString(url, "text/html");
+            const parsedUrl = parseResult.documentElement.textContent;
+            window.location.href = parsedUrl;
+            scanning = false;
+
+            video.srcObject.getTracks().forEach(track => {
+                track.stop();
+            });
+
+            qrResult.hidden = false;
+            canvasElement.hidden = true;
+            btnScanQR.hidden = false;
+        }
+    };
+
+    btnCam.onclick = () => {
+        navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+            .then(function (stream) {
+                scanning = true;
+                qrResult.hidden = true;
+                canvasElement.hidden = false;
+                video.setAttribute("playsinline", true);
+                video.srcObject = stream;
+                video.play();
+            });
+    }
+
+    function tick() {
+        canvasElement.height = video.videoHeight;
+        canvasElement.width = video.videoWidth;
+        canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
+
+        scanning && requestAnimationFrame(tick);
+    }
+
+    function scan() {
+        try {
+            qrcode.decode();
+        } catch (e) {
+            setTimeout(scan, 300);
+        }
+    }
+
+</script>
+<script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/qr_packed.js"></script>
+

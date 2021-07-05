@@ -1,0 +1,114 @@
+﻿@model IEnumerable<WebApplication2.Models.Class>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Class</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+@using (Html.BeginForm("UploadExcel", "Classes", FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return myFunction()" }))
+{
+    <div class="form-horizontal">
+        @*<div class="form-group">
+            <div class="control-label col-md-2">Download Format:</div>
+            <div class="col-md-10">
+                <a href="/User/DownloadExcel/"><img src="~/excel.ico" width="25" height="25" title="Download Excel format" alt="excel" /></a>
+            </div>
+        </div>*@
+        <div class="form-group">
+
+            <div class="control-label col-md-2">Excel:</div>
+            <div class="col-md-10">
+                <input type="file" id="FileUpload" name="FileUpload" class="" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Upload" id="btnSubmit" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">List Class</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ClassCode)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ClassName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.TotalStudent)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.TotalWeek)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.AspNetUser.Email)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.FACULTY.FACULTYNAME)
+                        </th>
+                        <th>
+                            SEMESTERCODE
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ClassCode)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ClassName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ClassLists.Count)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TotalWeek)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AspNetUser.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FACULTY.FACULTYNAME)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SEMESTER.SEMESTER_CODE)
+                            </td>
+                            <td>
+                                <a href="@Url.Action("Index","ATTENDANCE", new { id = item.id })">
+                                    <i class="fa fa-id-badge" aria-hidden="true"></i>
+                                </a> |
+                                <a href="@Url.Action("Index","ClassList", new {id = item.id })"><i class="fa fa-users" style="color:black;" aria-hidden="true"></i></a> |
+                                <a href="@Url.Action("Edit","Classes", new {id = item.id })">
+                                    <i class="fa fa-wrench" aria-hidden="true"></i>
+                                </a> |
+                                <a href="@Url.Action("Delete","Classes",new {id = item.id })"><i class="fa fa-times" style="color:red;" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+
+                    }
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>
+

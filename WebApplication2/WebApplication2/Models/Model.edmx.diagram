@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3ff3929ae3914a1999a01a9cc8d31f79" Name="Diagram1">
+        <EntityTypeShape EntityType="SEP24Team3Model.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SEP24Team3Model.AspNetRole" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SEP24Team3Model.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SEP24Team3Model.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SEP24Team3Model.AspNetUser" Width="1.5" PointX="3" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="SEP24Team3Model.Class" Width="1.5" PointX="8.25" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SEP24Team3Model.ClassList" Width="1.5" PointX="10.5" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SEP24Team3Model.FACULTY" Width="1.5" PointX="0.75" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SEP24Team3Model.SEMESTER" Width="1.5" PointX="6" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SEP24Team3Model.Student" Width="1.5" PointX="3" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SEP24Team3Model.sysdiagram" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="SEP24Team3Model.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="SEP24Team3Model.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="SEP24Team3Model.FK__Class__Userid__236943A5" ManuallyRouted="false" />
+        <AssociationConnector Association="SEP24Team3Model.FK__Class__Userid__339FAB6E" ManuallyRouted="false" />
+        <AssociationConnector Association="SEP24Team3Model.FK_Users_Faculty" ManuallyRouted="false" />
+        <AssociationConnector Association="SEP24Team3Model.FK__Class__Facultyid__2180FB33" ManuallyRouted="false" />
+        <AssociationConnector Association="SEP24Team3Model.FK__Class__Facultyid__31B762FC" ManuallyRouted="false" />
+        <AssociationConnector Association="SEP24Team3Model.FK__Class__Semesteri__22751F6C" ManuallyRouted="false" />
+        <AssociationConnector Association="SEP24Team3Model.FK__Class__Semesteri__32AB8735" ManuallyRouted="false" />
+        <AssociationConnector Association="SEP24Team3Model.fk_ClassList_Classid" ManuallyRouted="false" />
+        <AssociationConnector Association="SEP24Team3Model.fk_ClassList_Studentid" ManuallyRouted="false" />
+        <AssociationConnector Association="SEP24Team3Model.FK__Student__Faculty__2645B050" ManuallyRouted="false" />
+        <AssociationConnector Association="SEP24Team3Model.FK__Student__Faculty__3493CFA7" ManuallyRouted="false" />
+        <AssociationConnector Association="SEP24Team3Model.AspNetUserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="SEP24Team3Model.ATTENDANCE" Width="1.5" PointX="10.5" PointY="12.75" />
+        <AssociationConnector Association="SEP24Team3Model.FK__ATTENDANC__Class__37703C52" />
+        <AssociationConnector Association="SEP24Team3Model.FK__ATTENDANC__Stude__3864608B" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

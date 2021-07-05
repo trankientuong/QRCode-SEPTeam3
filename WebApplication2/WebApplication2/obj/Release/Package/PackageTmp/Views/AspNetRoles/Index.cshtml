@@ -1,0 +1,68 @@
+﻿@model IEnumerable<WebApplication2.Models.AspNetRole>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/DashBoardIndex.cshtml";
+}
+
+<h2>Authorize</h2>
+@*<a href="@Url.Action("Create","AspNetRoles")">Create</a>*@
+
+<form action="@Url.Action("Search","AspNetRoles")" method="get">
+        <input type="text" name="keyword" placeholder="Enter your keyword" value="@ViewBag.keyword">
+        <input type="submit" />
+    </form>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">List user of Role</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Role</th>
+                        <th>Users</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var role in Model)
+                    {
+                        <tr>
+                            <td>
+                                @role.Name
+                            </td>
+                            <td></td>
+                            <td>
+                                <a href="@Url.Action("Edit",new { id = role.Id })">Edit</a> |
+                                <a href="@Url.Action("Delete",new { id = role.Id })">Delete</a> |
+                                <a href="@Url.Action("Create","AspNetRoleUser",new { roleId = role.Id})">Add User</a>
+                            </td>
+                        </tr>
+
+                        foreach (var user in role.AspNetUsers)
+                        {
+                            <tr>
+                                <td></td>
+                                <td>@user.UserName</td>
+                                <td>
+                                    <a href="@Url.Action("Edit","AspNetRoleUser",new {userId = user.Id })">Edit</a> |
+                                    <a href="@Url.Action("Delete","AspNetRoleUser",new {roleId = role.Id,userId = user.Id })">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Role</th>
+                        <th>User</th>
+
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,42 @@
+﻿@model WebApplication2.Models.SEMESTER
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>SEMESTER</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SEMESTER_CODE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SEMESTER_CODE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SEMESTERNAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SEMESTERNAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SEMESTERYEAR)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SEMESTERYEAR)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

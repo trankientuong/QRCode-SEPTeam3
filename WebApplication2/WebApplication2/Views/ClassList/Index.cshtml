@@ -1,0 +1,91 @@
+﻿@model IEnumerable<WebApplication2.Models.Class>
+@using WebApplication2.Models;
+@{
+    ViewBag.Title = "Index";
+    var classId = ViewBag.CLASS_ID as Class;
+    var count = 0;
+}
+
+<h2>@classId.ClassName</h2>
+<p>
+    <a href="@Url.Action("Create","ClassList", new {classId = classId.id })">Create</a>
+</p>
+
+@using (Html.BeginForm("UploadExcel", "ClassList", FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return myFunction()" }))
+{
+    <input type="number" style="display: none" value="@classId.id" name="classId" />
+    <div class="form-horizontal">
+        @*<div class="form-group">
+            <div class="control-label col-md-2">Download Format:</div>
+            <div class="col-md-10">
+                <a href="/ClassList/DownloadExcel/"><img src="~/excel.ico" width="25" height="25" title="Download Excel format" alt="excel" /></a>
+            </div>
+        </div>*@
+        <div class="form-group">
+
+            <div class="control-label col-md-2">Excel:</div>
+            <div class="col-md-10">
+                <input type="file" id="FileUpload" name="FileUpload" class="" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Upload" id="btnSubmit" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">List Student of Class</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>
+                            #
+                        </th>
+                        <th>
+                            Student Code
+                        </th>
+                        <th>
+                            Full Name
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        foreach (var std in item.ClassLists.Where(x => x.Classid == classId.id))
+                        {
+                            count++;
+                            <tr>
+                                <td>
+                                    @count
+                                </td>
+                                <td>
+                                    @std.Student.StudentCode
+                                </td>
+                                <td>
+                                    @std.Student.Fullname
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("Edit","ClassList", new {classId = classId.id,studentId = std.Student.id })">Edit</a> |
+                                    <a href="@Url.Action("Delete","ClassList", new { classId = classId.id,studentId = std.Student.id })">Delete</a>
+
+                                </td>
+
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+

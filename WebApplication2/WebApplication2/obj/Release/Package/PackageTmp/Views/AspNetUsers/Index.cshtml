@@ -1,0 +1,75 @@
+﻿@model IEnumerable<WebApplication2.Models.AspNetUser>
+@using WebApplication2.Models;
+
+@{
+    ViewBag.Title = "Index";
+    SEP24Team3Entities db = new SEP24Team3Entities();
+    var roles = db.AspNetRoles.ToList();
+    string space = " ";
+}
+
+<h2>USERS</h2>
+
+
+
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">List Users</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Email)</th>
+                        <th>@Html.DisplayNameFor(model => model.UserName)</th>
+                        <th>Role</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            @*<td>
+                        @Html.DisplayFor(modelItem => item.SecurityStamp)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LockoutEnabled)
+                    </td>*@
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UserName)
+                            </td>
+                            <td>
+
+                                @foreach (var u in item.AspNetRoles)
+                                {                                  
+                                    @u.Name @space
+                                }
+                            </td>
+                            <td>
+                                <a href="@Url.Action("Edit","AspNetUsers", new { id = item.Id })">Edit</a> |
+                                <a href="@Url.Action("Delete","AspNetUsers", new { id = item.Id })">Delete</a>
+                            </td>
+                           
+                        </tr>
+
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Email)</th>
+                        <th>@Html.DisplayNameFor(model => model.UserName)</th>
+                        <th>Role</th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>

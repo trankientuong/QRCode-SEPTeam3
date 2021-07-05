@@ -1,0 +1,78 @@
+﻿@model IEnumerable<WebApplication2.Models.ATTENDANCE>
+@using WebApplication2.Models;
+@{
+    ViewBag.Title = "showQRCode";
+    var classId = ViewBag.CLASS_ID as Class;
+    var sessionName = ViewBag.SESSION_NAME as ATTENDANCE;
+}
+
+<style>
+    .center {
+        width: 300px;
+        margin: 0 auto;
+        padding-top: 200px;
+    }
+
+    .imgQRCode {
+        width: 300px;
+        height: 300px;
+    }
+
+    .hidden {
+        display: none;
+    }
+</style>
+
+<h1>@classId.ClassName - @sessionName.SessionName</h1>
+
+<div class="center">
+    <div class="countdown" style="text-align:center;font-size: 35px" ;></div>
+
+
+    @foreach (var img in Model.Where(x => x.ClassId == classId.id && x.SessionName.Equals(sessionName.SessionName)))
+    {
+        if (img != null && !String.IsNullOrEmpty(img.QRCodeImagePath))
+        {
+            <img class="imgQRCode" id="imgQR" src="@Url.Content(img.QRCodeImagePath)" alt="Image" />
+            break;
+        }
+
+    }
+</div>
+
+@*<div>
+    <a href="@Url.Action("Index2", "ATTENDANCE", new { classId = classId.id, sessionName = sessionName.SessionName })">Back</a>
+</div>*@
+
+
+<script>
+    var timer2 = sessionStorage.getItem("num") + ":01";
+    const countdown = document.querySelector('.countdown');
+    const imgQR = document.getElementById('imgQR');
+    var interval = setInterval(function () {
+
+        var timer = timer2.split(':');
+        //by parsing integer, I avoid all extra string processing
+        var minutes = parseInt(timer[0], 10);
+        var seconds = parseInt(timer[1], 10);
+        --seconds;
+        minutes = (seconds < 0) ? --minutes : minutes;
+        if (minutes < 0) {
+            clearInterval(interval);
+            countdown.classList.add('hidden');
+            imgQR.classList.add('hidden');
+            alert("Time out");
+            var url = '@Url.Action("RefreshQRCode","ATTENDANCE",new {sessionName = sessionName.SessionName, classId = classId.id, qrcodeText = sessionName.QRCodeText })'
+            const parseResult = new DOMParser().parseFromString(url, "text/html");
+            const parsedUrl = parseResult.documentElement.textContent;
+            window.location.href = parsedUrl;
+        }
+        seconds = (seconds < 0) ? 59 : seconds;
+        seconds = (seconds < 10) ? '0' + seconds : seconds;
+        //minutes = (minutes < 10) ?  minutes : minutes;
+        $('.countdown').html(minutes + ':' + seconds);
+        timer2 = minutes + ':' + seconds;
+    }, 1000);
+
+</script>
+

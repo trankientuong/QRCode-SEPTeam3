@@ -1,0 +1,77 @@
+﻿@model IEnumerable<WebApplication2.Models.Class>
+@using WebApplication2.Models
+@{
+    ViewBag.Title = "Index3";
+    var userId = ViewBag.USER_ID as AspNetUser;
+}
+
+<h2>Class of @userId.FullName</h2>
+
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">List Class</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ClassCode)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ClassName)
+                        </th>
+                       
+                        <th>
+                            @Html.DisplayNameFor(model => model.TotalWeek)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.AspNetUser.Email)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.FACULTY.FACULTYNAME)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SEMESTER.SEMESTERYEAR)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Where(x =>x.ClassLists.Any(g =>g.Student.StudentCode.Contains(userId.UserCode))))
+                    {
+
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ClassCode)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ClassName)
+                            </td>
+                          
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TotalWeek)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AspNetUser.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FACULTY.FACULTYNAME)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SEMESTER.SEMESTER_CODE)
+                            </td>
+                            <td>
+                                <a href="@Url.Action("Index3","ATTENDANCE",new {classId = item.id,studentId = userId.Id })">History Attendance</a>
+                            </td>
+                        </tr>
+
+                    }
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>

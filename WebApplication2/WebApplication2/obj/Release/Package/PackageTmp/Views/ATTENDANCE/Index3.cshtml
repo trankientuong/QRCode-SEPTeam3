@@ -1,0 +1,53 @@
+﻿@model IEnumerable<WebApplication2.Models.ATTENDANCE>
+@using WebApplication2.Models
+@{
+    ViewBag.Title = "Index3";
+    var userId = ViewBag.USER_ID as AspNetUser;
+    var classId = ViewBag.CLASS_ID as Class;
+    var count = 0;
+}
+
+<h2>Historical Attendance of @userId.FullName</h2>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">List Session of @classId.ClassName </h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>SessionName</th>
+                        <th>ClassName</th>
+                        <th>StudentName</th>
+                        <td>Status</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Where(x => x.ClassId == classId.id && x.Student.StudentCode.Equals(userId.UserCode)))
+                    {
+                        count++;
+                        <tr>
+                            <td>@count</td>
+                            <td>@item.SessionName</td>
+                            <td>@item.Class.ClassName</td>
+                            <td>@item.Student.Fullname</td>
+                            @if (item.STATUS == true)
+                            {
+                                <td>Đã điểm danh</td>
+                            }
+                            else
+                            {
+                                <td>Chưa điểm danh</td>
+                            }
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

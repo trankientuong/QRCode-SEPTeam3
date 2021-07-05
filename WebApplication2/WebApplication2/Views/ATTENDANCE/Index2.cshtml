@@ -1,0 +1,113 @@
+﻿@model IEnumerable<WebApplication2.Models.ATTENDANCE>
+@using WebApplication2.Models;
+
+@{
+    ViewBag.Title = "Index2";
+    var classId = ViewBag.CLASS_ID as Class;
+    var sessionName = ViewBag.SESSION_NAME as ATTENDANCE;
+    var count = 0;
+}
+
+<h2>@sessionName.SessionName - @classId.ClassName</h2>
+
+
+@using (Html.BeginForm("Generate", "ATTENDANCE", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <span style="color:red; ">@ViewBag.Message </span>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <input type="number" style="display: none" value="@classId.id" name="classId" />
+        </div>
+        <div class="form-group">
+            <input type="text" style="display:none" value="@sessionName.SessionName" name="sessionName" />
+        </div>
+        <div class="form-group">
+            <input type="text" style="display:none" value="@Guid.NewGuid().ToString()" name="qrcodeText" />
+        </div>
+
+        <label>Time (Minutes)</label>
+        <input type="number" id="number" value="" min="1" max="30" name="count" required />
+
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" id="submitBtn" value="Generate QR" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+
+@*@foreach (var img in Model.Where(x => x.ClassId == classId.id && x.SessionName.Equals(sessionName.SessionName)))
+{
+    if (img != null && !String.IsNullOrEmpty(img.QRCodeImagePath))
+    {
+        <img id="imgQR" src="@Url.Content(img.QRCodeImagePath)" alt="Image" style="display: none" />
+        break;
+    }
+
+}*@
+
+
+
+
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">List Student</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>StudentCode</th>
+                        <th>FullName</th>
+                        <th>Status</th>
+                        <td>Checkin At</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Where(x => x.ClassId == classId.id && x.SessionName.Equals(sessionName.SessionName)))
+                    {
+                        count++;
+                        <tr>
+                            <td>@count</td>
+                            <td>@item.Student.StudentCode</td>
+                            <td>@item.Student.Fullname</td>
+                            @if (item.STATUS == null || item.STATUS == false)
+                            {
+                                <td><a class="btn btn-primary" href="@Url.Action("AttendanceStudent","ATTENDANCE", new {classId = item.ClassId,studentId = item.StudentId,sessionName = sessionName.SessionName })">Chưa điểm danh</a></td>
+                            }
+                            else
+                            {
+                                <td><a class="btn btn-secondary" href="@Url.Action("AttendanceStudent","ATTENDANCE", new {classId = item.ClassId,studentId = item.StudentId,sessionName = sessionName.SessionName })">Đã điểm danh</a></td>
+                            }
+                            <td>@item.CreateDate</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div>
+    <a href="@Url.Action("Index","ATTENDANCE",new { id = classId.id })">Back</a>
+</div>
+
+<script>
+    let Btn = document.querySelector("#submitBtn")
+    Btn.addEventListener("click", function () {
+        var number = document.getElementById("number").value;
+        sessionStorage.setItem("num",number)
+    });
+    
+</script>

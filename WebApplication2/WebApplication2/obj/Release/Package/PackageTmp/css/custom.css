@@ -1,0 +1,17 @@
+﻿.bg-gradient-primary {
+    background-color: #4e73df;
+    background-image: linear-gradient( 180deg,#1CC7F5 10%,#1cc88a 100%);
+    background-size: cover;
+}
+
+.bg-gradient-success {
+    background-color: #1cc88a;
+    background-image: linear-gradient( 180deg,#1cc88a 10%,#1cc88a 100%);
+    background-size: cover;
+}
+
+.bg-gradient-secondary {
+    background-color: #f8f9fc;
+    background-image: linear-gradient( 180deg,#1CC7F5 10%,#e4ebff 100%);
+    background-size: cover;
+}

@@ -1,0 +1,431 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SEP24Team3Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="C__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetRole">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUserClaim">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUserLogin">
+    <Key>
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="EmailConfirmed" Type="Boolean" />
+    <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumberConfirmed" Type="Boolean" />
+    <Property Name="TwoFactorEnabled" Type="Boolean" />
+    <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+    <Property Name="LockoutEnabled" Type="Boolean" />
+    <Property Name="AccessFailedCount" Type="Int32" />
+    <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UserCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Degree" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="FacultyId" Type="Int32" />
+    <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+    <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+    <NavigationProperty Name="Classes" Relationship="Self.FK__Class__Userid__236943A5" FromRole="AspNetUsers" ToRole="Class" />
+    <NavigationProperty Name="FACULTY" Relationship="Self.FK_Users_Faculty" FromRole="AspNetUsers" ToRole="FACULTY" />
+    <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+  </EntityType>
+  <EntityType Name="Class">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ClassCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LessonCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ClassName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Credit" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="LessonType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="DayLearn" Type="Int32" />
+    <Property Name="ClassTime" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Room" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="TotalStudent" Type="Int32" />
+    <Property Name="StartDate" Type="DateTime" Precision="0" />
+    <Property Name="EndDate" Type="DateTime" Precision="0" />
+    <Property Name="TotalWeek" Type="Int32" />
+    <Property Name="Scholastic" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Semesterid" Type="Int32" />
+    <Property Name="Userid" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Facultyid" Type="Int32" />
+    <NavigationProperty Name="AspNetUser" Relationship="Self.FK__Class__Userid__236943A5" FromRole="Class" ToRole="AspNetUsers" />
+    <NavigationProperty Name="FACULTY" Relationship="Self.FK__Class__Facultyid__2180FB33" FromRole="Class" ToRole="FACULTY" />
+    <NavigationProperty Name="SEMESTER" Relationship="Self.FK__Class__Semesteri__22751F6C" FromRole="Class" ToRole="SEMESTER" />
+    <NavigationProperty Name="ClassLists" Relationship="Self.fk_ClassList_Classid" FromRole="Class" ToRole="ClassList" />
+    <NavigationProperty Name="ATTENDANCEs" Relationship="SEP24Team3Model.FK__ATTENDANC__Class__37703C52" FromRole="Class" ToRole="ATTENDANCE" />
+    <Property Name="NoSession" Type="Int32" />
+  </EntityType>
+  <EntityType Name="ClassList">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Classid" Type="Int32" Nullable="false" />
+    <Property Name="Studentid" Type="Int32" Nullable="false" />
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Class" Relationship="Self.fk_ClassList_Classid" FromRole="ClassList" ToRole="Class" />
+    <NavigationProperty Name="Student" Relationship="Self.fk_ClassList_Studentid" FromRole="ClassList" ToRole="Student" />
+  </EntityType>
+  <EntityType Name="FACULTY">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FACULTYNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="EMAIL" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_Users_Faculty" FromRole="FACULTY" ToRole="AspNetUsers" />
+    <NavigationProperty Name="Classes" Relationship="Self.FK__Class__Facultyid__2180FB33" FromRole="FACULTY" ToRole="Class" />
+    <NavigationProperty Name="Students" Relationship="Self.FK__Student__Faculty__2645B050" FromRole="FACULTY" ToRole="Student" />
+  </EntityType>
+  <EntityType Name="SEMESTER">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SEMESTER_CODE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="SEMESTERNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SEMESTERYEAR" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Classes" Relationship="Self.FK__Class__Semesteri__22751F6C" FromRole="SEMESTER" ToRole="Class" />
+  </EntityType>
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StudentCode" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Fullname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Facultyid" Type="Int32" />
+    <NavigationProperty Name="ClassLists" Relationship="Self.fk_ClassList_Studentid" FromRole="Student" ToRole="ClassList" />
+    <NavigationProperty Name="FACULTY" Relationship="Self.FK__Student__Faculty__2645B050" FromRole="Student" ToRole="FACULTY" />
+    <NavigationProperty Name="ATTENDANCEs" Relationship="SEP24Team3Model.FK__ATTENDANC__Stude__3864608B" FromRole="Student" ToRole="ATTENDANCE" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserClaims" Type="Self.AspNetUserClaim" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserClaims">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserLogins" Type="Self.AspNetUserLogin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserLogins">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Class__Userid__236943A5">
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="0..1" />
+    <End Role="Class" Type="Self.Class" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Class">
+        <PropertyRef Name="Userid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Class__Userid__339FAB6E">
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="0..1" />
+    <End Role="Class" Type="Self.Class" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Class">
+        <PropertyRef Name="Userid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Users_Faculty">
+    <End Role="FACULTY" Type="Self.FACULTY" Multiplicity="0..1" />
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FACULTY">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="AspNetUsers">
+        <PropertyRef Name="FacultyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Class__Facultyid__2180FB33">
+    <End Role="FACULTY" Type="Self.FACULTY" Multiplicity="0..1" />
+    <End Role="Class" Type="Self.Class" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FACULTY">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Class">
+        <PropertyRef Name="Facultyid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Class__Facultyid__31B762FC">
+    <End Role="FACULTY" Type="Self.FACULTY" Multiplicity="0..1" />
+    <End Role="Class" Type="Self.Class" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FACULTY">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Class">
+        <PropertyRef Name="Facultyid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Class__Semesteri__22751F6C">
+    <End Role="SEMESTER" Type="Self.SEMESTER" Multiplicity="0..1" />
+    <End Role="Class" Type="Self.Class" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SEMESTER">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Class">
+        <PropertyRef Name="Semesterid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Class__Semesteri__32AB8735">
+    <End Role="SEMESTER" Type="Self.SEMESTER" Multiplicity="0..1" />
+    <End Role="Class" Type="Self.Class" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SEMESTER">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Class">
+        <PropertyRef Name="Semesterid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ClassList_Classid">
+    <End Role="Class" Type="Self.Class" Multiplicity="1" />
+    <End Role="ClassList" Type="Self.ClassList" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Class">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="ClassList">
+        <PropertyRef Name="Classid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ClassList_Studentid">
+    <End Role="Student" Type="Self.Student" Multiplicity="1" />
+    <End Role="ClassList" Type="Self.ClassList" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="ClassList">
+        <PropertyRef Name="Studentid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Student__Faculty__2645B050">
+    <End Role="FACULTY" Type="Self.FACULTY" Multiplicity="0..1" />
+    <End Role="Student" Type="Self.Student" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FACULTY">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Student">
+        <PropertyRef Name="Facultyid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Student__Faculty__3493CFA7">
+    <End Role="FACULTY" Type="Self.FACULTY" Multiplicity="0..1" />
+    <End Role="Student" Type="Self.Student" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FACULTY">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Student">
+        <PropertyRef Name="Facultyid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AspNetUserRoles">
+    <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="SEP24Team3Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+    <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
+    <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
+    <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
+    <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
+    <EntitySet Name="Classes" EntityType="Self.Class" />
+    <EntitySet Name="ClassLists" EntityType="Self.ClassList" />
+    <EntitySet Name="FACULTies" EntityType="Self.FACULTY" />
+    <EntitySet Name="SEMESTERs" EntityType="Self.SEMESTER" />
+    <EntitySet Name="Students" EntityType="Self.Student" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Class__Userid__236943A5" Association="Self.FK__Class__Userid__236943A5">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="Class" EntitySet="Classes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Class__Userid__339FAB6E" Association="Self.FK__Class__Userid__339FAB6E">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="Class" EntitySet="Classes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Users_Faculty" Association="Self.FK_Users_Faculty">
+      <End Role="FACULTY" EntitySet="FACULTies" />
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Class__Facultyid__2180FB33" Association="Self.FK__Class__Facultyid__2180FB33">
+      <End Role="FACULTY" EntitySet="FACULTies" />
+      <End Role="Class" EntitySet="Classes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Class__Facultyid__31B762FC" Association="Self.FK__Class__Facultyid__31B762FC">
+      <End Role="FACULTY" EntitySet="FACULTies" />
+      <End Role="Class" EntitySet="Classes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Class__Semesteri__22751F6C" Association="Self.FK__Class__Semesteri__22751F6C">
+      <End Role="SEMESTER" EntitySet="SEMESTERs" />
+      <End Role="Class" EntitySet="Classes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Class__Semesteri__32AB8735" Association="Self.FK__Class__Semesteri__32AB8735">
+      <End Role="SEMESTER" EntitySet="SEMESTERs" />
+      <End Role="Class" EntitySet="Classes" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ClassList_Classid" Association="Self.fk_ClassList_Classid">
+      <End Role="Class" EntitySet="Classes" />
+      <End Role="ClassList" EntitySet="ClassLists" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ClassList_Studentid" Association="Self.fk_ClassList_Studentid">
+      <End Role="Student" EntitySet="Students" />
+      <End Role="ClassList" EntitySet="ClassLists" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Student__Faculty__2645B050" Association="Self.FK__Student__Faculty__2645B050">
+      <End Role="FACULTY" EntitySet="FACULTies" />
+      <End Role="Student" EntitySet="Students" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Student__Faculty__3493CFA7" Association="Self.FK__Student__Faculty__3493CFA7">
+      <End Role="FACULTY" EntitySet="FACULTies" />
+      <End Role="Student" EntitySet="Students" />
+    </AssociationSet>
+    <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
+      <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+    </AssociationSet>
+    <EntitySet Name="ATTENDANCEs" EntityType="SEP24Team3Model.ATTENDANCE" />
+    <AssociationSet Name="FK__ATTENDANC__Class__37703C52" Association="SEP24Team3Model.FK__ATTENDANC__Class__37703C52">
+      <End Role="Class" EntitySet="Classes" />
+      <End Role="ATTENDANCE" EntitySet="ATTENDANCEs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ATTENDANC__Stude__3864608B" Association="SEP24Team3Model.FK__ATTENDANC__Stude__3864608B">
+      <End Role="Student" EntitySet="Students" />
+      <End Role="ATTENDANCE" EntitySet="ATTENDANCEs" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="ATTENDANCE">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SessionName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="ClassId" Type="Int32" />
+    <Property Name="StudentId" Type="Int32" />
+    <NavigationProperty Name="Class" Relationship="SEP24Team3Model.FK__ATTENDANC__Class__37703C52" FromRole="ATTENDANCE" ToRole="Class" />
+    <NavigationProperty Name="Student" Relationship="SEP24Team3Model.FK__ATTENDANC__Stude__3864608B" FromRole="ATTENDANCE" ToRole="Student" />
+    <Property Name="STATUS" Type="Boolean" />
+    <Property Name="QRCodeText" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="QRCodeImagePath" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <Association Name="FK__ATTENDANC__Class__37703C52">
+    <End Type="SEP24Team3Model.Class" Role="Class" Multiplicity="0..1" />
+    <End Type="SEP24Team3Model.ATTENDANCE" Role="ATTENDANCE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Class">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="ATTENDANCE">
+        <PropertyRef Name="ClassId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ATTENDANC__Stude__3864608B">
+    <End Type="SEP24Team3Model.Student" Role="Student" Multiplicity="0..1" />
+    <End Type="SEP24Team3Model.ATTENDANCE" Role="ATTENDANCE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="ATTENDANCE">
+        <PropertyRef Name="StudentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

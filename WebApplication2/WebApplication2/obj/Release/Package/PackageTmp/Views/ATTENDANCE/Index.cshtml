@@ -1,0 +1,32 @@
+﻿@model IEnumerable<WebApplication2.Models.ATTENDANCE>
+@using WebApplication2.Models;
+
+@{
+    ViewBag.Title = "Index";
+    var classId = ViewBag.CLASS_ID as Class;
+}
+
+<h2>@classId.ClassName</h2>
+
+@*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
+
+
+@for (int i = 1; i <= classId.NoSession; i++)
+{
+    if (classId.ATTENDANCEs.Count(x => x.SessionName.Contains("Buổi "+i) && x.STATUS == true) > 0)
+    {
+        <a class="btn btn-secondary" href="@Url.Action("Index2","ATTENDANCE", new { classId = classId.id,sessionName = "Buổi " + i })">Buổi @i</a>
+    }
+    else
+    {
+        <a class="btn btn-primary" href="@Url.Action("Index2","ATTENDANCE", new { classId = classId.id,sessionName = "Buổi " + i })">Buổi @i</a>
+    }
+}
+
+<div>
+    <a href="@Url.Action("Index","Classes")">Back</a>
+</div>
+
+
