@@ -1,0 +1,119 @@
+﻿@model IEnumerable<WebApplication2.Models.Class>
+@using WebApplication2.Models
+@{
+    ViewBag.Title = "Statistics2";
+    var db = new SEP24Team3Entities();
+    var studentInClass = db.ClassLists.ToList();
+    var atd = db.ATTENDANCEs.ToList();
+    var semester = db.SEMESTERs.ToList();
+    var semesterId = ViewBag.Semester_Id as SEMESTER;
+}
+
+<h2>Statistics Students Absent</h2>
+<form action="@Url.Action("searchBySemester2","Classes")" method="get">
+    <span class="text-info font-weight-bold">Semester:</span>
+    <select id="semester" name="semesterId" required>
+        <optgroup label="Semester"></optgroup>
+        <option value="0">All</option>
+        @foreach (var sm in semester)
+        {
+            <option id="@sm.ID" value="@sm.ID">@sm.SEMESTER_CODE</option>            
+        }
+    </select>
+    <input type="submit" id="btnFilter" class="btn btn-info" value="Filter" />
+    
+</form>   
+<div class="mt-2">
+    <a id="btnExport" class="btn btn-success" href="@Url.Action("ExportToExcelStatistics2","Classes")">Export Excel</a>
+</div>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold">Statistics</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Class Code</th>
+                        <th>Class Name</th>
+                        <th>Student Name</th>
+                        <th>No.Session Absent</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        if (item.NoSession != null)
+                        {
+                            foreach (var std in studentInClass.Where(x => x.Classid == item.id))
+                            {
+                                int count = 0;
+                                <tr>
+                                    <th>@std.Class.ClassCode</th>
+                                    <th>@std.Class.ClassName</th>
+                                    <td>@std.Student.Fullname</td>
+
+                                    @foreach (var stdAbsent in atd.Where(x => x.ClassId == item.id && x.StudentId == std.Studentid))
+                                    {
+
+                                        if (stdAbsent.STATUS == null || stdAbsent.STATUS == false)
+                                        {
+                                            count++;
+                                        }
+                                    }
+                                    <td>@count/@item.NoSession</td>
+                                </tr>
+                            }
+                        }
+                       
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    //const btnFilter = document.getElementById('btnFilter');
+    //var semester = document.getElementById('semester');
+    //const btnExport = document.getElementById('btnExport');
+
+    //$(document).ready(function () {
+    //    var semestercode = $('#optionId').val();
+    //    $('#btnFilter').click(function () {
+    //        var semesterId = semester.value;
+    //        var semesterCode = semester.options[semester.selectedIndex].text;
+    //        var textSemester = `Export Excel Semester ${semesterCode}`;
+    //        $.ajax({
+    //            url: '/Classes/searchBySemester2',
+    //            type: 'GET',
+    //            data: { semesterId: semesterId },
+    //            success: function (res) {
+    //                if (semesterId != 0)
+    //                sessionStorage.setItem("semester", textSemester);       
+    //            }
+    //        });
+    //    });
+    //    if (sessionStorage.getItem("semester")) {
+    //        btnExport.innerHTML = sessionStorage.getItem("semester");
+    //    } else {
+    //        btnExport.innerHTML = "Export Excel";
+    //    }
+        
+    //    sessionStorage.clear();
+    //}); 
+
+    window.onload = function () {
+        var selItem = sessionStorage.getItem("SelItem2");
+        $('#semester').val(selItem);
+        sessionStorage.clear();
+    }
+
+
+    $('#semester').change(function () {
+        var selVal = $(this).val();
+        sessionStorage.setItem("SelItem2", selVal);
+    });
+</script>

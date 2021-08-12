@@ -1,0 +1,129 @@
+﻿@import url('https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url('../img/background-vanlang.png');
+    background-size: cover;
+}
+
+.container {
+    position: relative;
+    display: flex;
+    justify-self: center;
+    align-items: center;
+    flex-wrap: wrap;
+    z-index: 1;
+}
+
+    .container .card {
+        position: relative;
+        width: 500px;
+        height: 400px;
+        margin: 30 px;
+        box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.5);
+        border-radius: 15px;
+        background: rgba(225, 225, 225, 0,1);
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-top: 1px solid rgba(225, 225, 225, 0,5);
+        border-left: 3px solid rgba(225, 225, 225, 0,5);
+        backdrop-filter: blur(5px);
+    }
+
+        .container .card .content {
+            padding: 20px;
+            text-align: center;
+            transform: translateY(50px);
+            opacity: 1;
+            transition: 0.5s;
+        }
+
+
+        .container .card:hover .content {
+            transform: translateY(50px);
+            opacity: 1;
+        }
+
+        .container .card .content h2 {
+            position: absolute;
+            /*top: -120px;*/
+            left: 10px;
+            font-size: 2em;
+            color: rgba(225, 225, 225, 0,05);
+            pointer-events: none;
+            animation: type 3s steps(14);
+            overflow: hidden;
+            white-space: nowrap;
+            font-family: consolas;
+            border-right: 4px solid black;
+            width: 14ch;
+        }
+
+        .container .card .content p img {
+            width: 250px;
+            top: -90px;
+            position: absolute;
+            left: 10px;
+        }
+
+@keyframes type {
+    0% {
+        width: 0ch;
+    }
+
+    100% {
+        width: 14ch;
+    }
+}
+
+.container .card .content a {
+    position: relative;
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 15px;
+    background: #F80000;
+    color: #fff;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: 500;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+
+/*.btn btn-login {
+    position: relative;
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 15px;
+    background: #F80000;
+    color: #fff;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: 500;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}*/
+
+.btn btn-login {
+    position: relative;
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 15px;
+    background: #F80000;
+    color: #fff;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: 500;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}

@@ -1,0 +1,139 @@
+﻿@model IEnumerable<WebApplication2.Models.Class>
+@using WebApplication2.Models
+@{
+    ViewBag.Title = "Statistics1";
+    var NoSessionMax = ViewBag.NoSessionMax;
+    var db = new SEP24Team3Entities();
+    var semester = db.SEMESTERs.ToList();
+}
+
+<h2>Statistics Student Attended each Session of Class</h2>
+<form action="@Url.Action("searchBySemester1","Classes")" method="get">
+    <span class="text-info font-weight-bold">Semester:</span>
+    <select id="semester" name="semesterId" required>
+        <optgroup label="Semester"></optgroup>
+        <option value="0">All</option>
+        @foreach (var sm in semester)
+        {
+            <option id="optionId" value="@sm.ID">@sm.SEMESTER_CODE</option>
+        }
+    </select>
+    <input type="submit" id="btnFilter" class="btn btn-info" value="Filter" />
+
+</form>
+<div class="mt-2">
+    <a class="btn btn-success" id="btnExport" href="@Url.Action("ExportToExcelStatistics1","Classes")">Export Excel</a>
+</div>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold">Statistics</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Class Code</th>
+                        <th class="text-center">
+                            Class Name
+                        </th>
+                        @for (int i = 1; i <= NoSessionMax; i++)
+                        {
+                            <th class="text-center">Buổi @i</th>
+                        }
+                        @if (NoSessionMax == 0)
+                        {
+                            <th>No Session in Semester</th>
+                        }
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.ClassCode</td>
+                            <td>@item.ClassName</td>
+
+                            @for (int i = 1; i <= item.NoSession; i++)
+                            {
+                                int count = 0;
+                                foreach (var stdCheckin in item.ATTENDANCEs)
+                                {
+                                    var test = stdCheckin.SessionName.Substring(5);
+                                    if (stdCheckin.STATUS == true && stdCheckin.SessionName.Substring(5).Equals(i.ToString()))
+                                    {
+
+                                        count++;
+                                    }
+                                }
+                                <td>@count/@item.ClassLists.Count</td>
+                            }
+                            @for (int? j = item.NoSession + 1; j <= NoSessionMax; j++)
+                            {
+                                <td style="background-color:gray;"></td>
+                            }
+                            @if (item.NoSession == null)
+                            {
+                                for (int i = 1; i <= NoSessionMax; i++)
+                                {
+                                    <td style="background-color:gray;"></td>
+                                }
+                                if (NoSessionMax == 0)
+                                {
+                                    <td style="background-color:gray;"></td>
+                                }
+                            }
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    //const btnFilter = document.getElementById('btnFilter');
+    //var semester = document.getElementById('semester');
+    //const btnExport = document.getElementById('btnExport');
+
+    //$(document).ready(function () {
+    //    $('#btnFilter').click(function () {
+    //        var semesterId = semester.value;
+    //        var semesterCode = semester.options[semester.selectedIndex].text;
+    //        var textSemester = `Export Excel Semester ${semesterCode}`;
+    //        $.ajax({
+    //            url: '/Classes/searchBySemester1',
+    //            type: 'GET',
+    //            data: { semesterId: semesterId },
+    //            success: function (res) {
+    //                if (semesterId != 0)
+    //                    sessionStorage.setItem("semester", textSemester);
+    //            }
+    //        });
+    //    });
+    //    if (sessionStorage.getItem("semester")) {
+    //        btnExport.innerHTML = sessionStorage.getItem("semester");
+    //    } else {
+    //        btnExport.innerHTML = "Export Excel";
+    //    }
+
+    //    sessionStorage.clear();
+    //});
+
+    window.onload = function () {
+        var selItem = sessionStorage.getItem("SelItem");
+        $('#semester').val(selItem);
+        sessionStorage.clear();
+    }
+
+
+        $('#semester').change(function () {
+            var selVal = $(this).val();
+            sessionStorage.setItem("SelItem", selVal);
+        });
+        
+
+</script>
